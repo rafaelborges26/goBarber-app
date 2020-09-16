@@ -18,6 +18,7 @@ import Input from '../../components/Input';
 import Button from '../../components/Button';
 import logoImg from '../../assets/logo.png';
 import { Container, Title, BackToSignIn, BackToSignInText } from './styles';
+import api from '../../services/api';
 
 import getValidationErrors from '../../utils/getValidationErrors';
 
@@ -49,7 +50,15 @@ const SignUp: React.FC = () => {
         abortEarly: false, // mostrar todos os erros
       });
 
-      // api.post('/users', data)
+      api.post('/users', data);
+
+      // console.log(data);
+      navigation.goBack();
+
+      Alert.alert(
+        'Cadastro realizado com sucesso!',
+        'Você ja pode fazer login na aplicação.',
+      );
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         const errors = getValidationErrors(err);
