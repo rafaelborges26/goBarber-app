@@ -1,4 +1,10 @@
-import React, { createContext, useCallback, useState, useContext, useEffect } from 'react';
+import React, {
+  createContext,
+  useCallback,
+  useState,
+  useContext,
+  useEffect,
+} from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
 import api from '../services/api';
 
@@ -28,18 +34,15 @@ export const AuthProvider: React.FC = ({ children }) => {
       // quando o user sair e voltar pro site
       const [token, user] = await AsyncStorage.multiGet([
         '@GoBarber.token',
-        '@GoBarber.user'
+        '@GoBarber.user',
       ]);
-    
-      if(token[1] && user[1]) {
-        setData({ token: token[1], user: JSON.parse(user[1]) }) //[1] pois o primeiro elemento é a chave no multiget
+
+      if (token[1] && user[1]) {
+        setData({ token: token[1], user: JSON.parse(user[1]) }); // [1] pois o primeiro elemento é a chave no multiget
       }
-      
-  }
-    loadStoragedData()
-  
-    })
-      
+    }
+    loadStoragedData();
+  }, []);
 
   const signIn = useCallback(async ({ email, password }) => {
     // metodo para login
@@ -55,10 +58,9 @@ export const AuthProvider: React.FC = ({ children }) => {
     setData({ token, user });
 
     await AsyncStorage.multiSet([
-        ['@GoBarber.token', token],
-        ['@GoBarber.user', JSON.stringify(user)    
-    ])
-
+      ['@GoBarber.token', token],
+      ['@GoBarber.user', JSON.stringify(user)],
+    ]);
   }, []);
 
   const signOut = useCallback(async () => {
