@@ -16,6 +16,7 @@ interface SignInCredentials {
 interface AuthContextData {
   user: object;
   signIn(credentials: SignInCredentials): Promise<void>;
+  loading: boolean;
   signOut(): void;
 }
 
@@ -29,6 +30,8 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData); // cr
 export const AuthProvider: React.FC = ({ children }) => {
   const [data, setData] = useState<AuthState>({} as AuthState);
 
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     async function loadStoragedData(): Promise<void> {
       // quando o user sair e voltar pro site
@@ -40,6 +43,8 @@ export const AuthProvider: React.FC = ({ children }) => {
       if (token[1] && user[1]) {
         setData({ token: token[1], user: JSON.parse(user[1]) }); // [1] pois o primeiro elemento é a chave no multiget
       }
+
+      setLoading(false); // fazendo o loading para n dar flash da tela de login se recarregar a pagina eo user tiver autenticado
     }
     loadStoragedData();
   }, []);
@@ -71,7 +76,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user: data.user, signIn, signOut }}>
+    <AuthContext.Provider value={{ user: data.user, loading, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );
