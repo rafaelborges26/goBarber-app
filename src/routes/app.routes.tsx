@@ -11,7 +11,7 @@ const App = createStackNavigator(); // criar uma navegação (usuario autenticad
 const AuthRoutes: React.FC = () => (
   <App.Navigator
     screenOptions={{
-      // headerShown: false,
+      headerShown: false,
       cardStyle: { backgroundColor: '#312e38' },
     }}
   >

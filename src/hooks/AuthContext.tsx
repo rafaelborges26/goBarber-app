@@ -13,8 +13,15 @@ interface SignInCredentials {
   password: string;
 }
 
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  avatar_url: string;
+}
+
 interface AuthContextData {
-  user: object;
+  user: User;
   signIn(credentials: SignInCredentials): Promise<void>;
   loading: boolean;
   signOut(): void;
@@ -22,7 +29,7 @@ interface AuthContextData {
 
 interface AuthState {
   token: string;
-  user: object;
+  user: User;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData); // criar contexto quando as variaveis seram acessadas em diversos locais, ex: nome do usuario
@@ -41,6 +48,8 @@ export const AuthProvider: React.FC = ({ children }) => {
       ]);
 
       if (token[1] && user[1]) {
+        api.defaults.headers.authorization = `Bearer ${token[1]}`; // automatizar o token nas rotas
+
         setData({ token: token[1], user: JSON.parse(user[1]) }); // [1] pois o primeiro elemento é a chave no multiget
       }
 
@@ -61,6 +70,8 @@ export const AuthProvider: React.FC = ({ children }) => {
     await AsyncStorage.setItem('@GoBarber.token', token);
     await AsyncStorage.setItem('@GoBarber.user', JSON.stringify(user)); // usar stringfy por ser um objeto
     setData({ token, user });
+
+    api.defaults.headers.authorization = `Bearer ${token}`; // automatizar o token nas rotas
 
     await AsyncStorage.multiSet([
       ['@GoBarber.token', token],
