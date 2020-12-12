@@ -38,6 +38,7 @@
         "no-use-before-define": "off",
         "camelcase": "off",
         "@typescript-eslint/camelcase": ["warn"],
+        "react/jsx-one-expression-per-line": "off",
         "import/extensions": [
             "error",
             "ignorePackages",
