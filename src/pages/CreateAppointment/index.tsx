@@ -116,8 +116,6 @@ const CreateAppointment: React.FC = () => {
       date.setHours(selectedHour + 1); // add mais um na hora pra ficar certo
       date.setMinutes(0);
 
-      console.log(date);
-
       await api.post('appointments', {
         provider_id: selectedProvider,
         date,
