@@ -13,6 +13,7 @@ import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
 import Icon from 'react-native-vector-icons/Feather';
+import ImagePicker from 'react-native-image-picker';
 
 import Input from '../../components/Input';
 import Button from '../../components/Button';
@@ -118,6 +119,10 @@ const SignUp: React.FC = () => {
     navigation.goBack();
   }, [navigation]);
 
+  const handleUpdateAvatar = useCallback(() => {
+    // ImagePicker.
+  }, []);
+
   return (
     <>
       <KeyboardAvoidingView
@@ -170,7 +175,7 @@ const SignUp: React.FC = () => {
                   oldPasswordlInputRef.current?.focus(); // passando o foco pro password
                 }}
               />
-              data
+
               <Input
                 ref={oldPasswordlInputRef}
                 secureTextEntry
