@@ -1,6 +1,7 @@
 {
     "env": {
-        "es6": true
+        "es6": true,
+        "browser": true
     },
     "extends": [
         "plugin:react/recommended",
@@ -38,6 +39,8 @@
         "no-unused-expressions": "off",
         "no-use-before-define": "off",
         "camelcase": "off",
+        "no-empty-function": "off",
+        "@typescript-eslint/no-empty-function": ["error"],
         "@typescript-eslint/camelcase": ["warn"],
         "react/jsx-one-expression-per-line": "off",
         "import/extensions": [
